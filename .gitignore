@@ -1,0 +1,17 @@
+# Local files and secrets
+.DS_Store
+Thumbs.db
+.env
+.env.*
+*.pem
+*.key
+*.p12
+*.pfx
+*.log
+*.zip
+*.tar.gz
+__pycache__/
+node_modules/
+.openai/
+.vercel/
+.wrangler/
