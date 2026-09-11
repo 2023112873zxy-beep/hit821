@@ -1,0 +1,26 @@
+name: Import reviewed website files
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - '.github/workflows/import.yml'
+      - 'hit821-github.zip'
+permissions:
+  contents: write
+jobs:
+  import:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v6
+      - name: Restore reviewed static files
+        shell: bash
+        run: |
+          if [ ! -f hit821-github.zip ]; then exit 0; fi
+          echo 'c5d59d0ea82c9cdac7a0b199bfe518fbae0f9b0eb23478e922f045234f84f639  hit821-github.zip' | sha256sum -c -
+          unzip -o hit821-github.zip
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add index.html css/styles.css js/app.js data/search-index.js assets/.gitkeep .nojekyll .gitignore README.md
+          git rm hit821-github.zip
+          git commit -m 'Import reviewed static website files'
+          git push origin HEAD:main
